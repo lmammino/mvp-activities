@@ -1,0 +1,69 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+devDependencies:
+  emoji-strip:
+    specifier: ^1.0.1
+    version: 1.0.1
+  yaml:
+    specifier: ^2.3.4
+    version: 2.3.4
+  youtubei.js:
+    specifier: ^9.0.2
+    version: 9.0.2
+
+packages:
+
+  /@fastify/busboy@2.1.0:
+    resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
+    engines: {node: '>=14'}
+    dev: true
+
+  /acorn@8.11.3:
+    resolution: {integrity: sha512-Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+    dev: true
+
+  /emoji-regex@6.5.1:
+    resolution: {integrity: sha512-PAHp6TxrCy7MGMFidro8uikr+zlJJKJ/Q6mm2ExZ7HwkyR9lSVFfE3kt36qcwa24BQL7y0G9axycGjK1A/0uNQ==}
+    dev: true
+
+  /emoji-strip@1.0.1:
+    resolution: {integrity: sha512-1iU1Bz98ziALBnMTzQHKB104vntCokqgdmJIP9p1eM0Musc3WQ4y8C5noIckorxJ1vihZCTv2lyXMTM1UsemPg==}
+    dependencies:
+      emoji-regex: 6.5.1
+    dev: true
+
+  /jintr@1.1.0:
+    resolution: {integrity: sha512-Tu9wk3BpN2v+kb8yT6YBtue+/nbjeLFv4vvVC4PJ7oCidHKbifWhvORrAbQfxVIQZG+67am/mDagpiGSVtvrZg==}
+    dependencies:
+      acorn: 8.11.3
+    dev: true
+
+  /tslib@2.6.2:
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
+    dev: true
+
+  /undici@5.28.2:
+    resolution: {integrity: sha512-wh1pHJHnUeQV5Xa8/kyQhO7WFa8M34l026L5P/+2TYiakvGy5Rdc8jWZVyG7ieht/0WgJLEd3kcU5gKx+6GC8w==}
+    engines: {node: '>=14.0'}
+    dependencies:
+      '@fastify/busboy': 2.1.0
+    dev: true
+
+  /yaml@2.3.4:
+    resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
+    engines: {node: '>= 14'}
+    dev: true
+
+  /youtubei.js@9.0.2:
+    resolution: {integrity: sha512-D7GoJmupYaJxTNQyHRWYw8MUdQTxRaa3c7nzM9etWQjaexepFGVlVtwl3CybLx7GopBNtBvr7RxSUUIUyNnYIg==}
+    dependencies:
+      jintr: 1.1.0
+      tslib: 2.6.2
+      undici: 5.28.2
+    dev: true

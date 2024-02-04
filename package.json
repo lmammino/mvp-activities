@@ -1,0 +1,18 @@
+{
+  "name": "mvp-activities",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/client.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Luciano Mammino",
+  "license": "MIT",
+  "devDependencies": {
+    "emoji-strip": "^1.0.1",
+    "yaml": "^2.3.4",
+    "youtubei.js": "^9.0.2"
+  }
+}
