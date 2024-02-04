@@ -1,6 +1,29 @@
 import { randomUUID } from 'node:crypto'
 
+/**
+ * MVP activities client.
+ * Allows you to interact with the MVP Activities API
+ */
 export class MVPActivitiesClient {
+  /**
+   * Creates a new instance of the client
+   *
+   * It needs an auth token and an email to work. These parameters can be passed directly, otherwise they will
+   * be read from the environment variables `MVP_API_TOKEN` and `MVP_API_EMAIL`
+   * If one of the two values is not provided, an error will be thrown.
+   *
+   * Once the client is created, you need to explicitly call `init()` to fetch the user profile information (which might be needed internally for some operations)
+   *
+   * @param {string} [authToken] - The auth token to use for the requests (see README.md to see how to get it)
+   * @param {string} [email] - The email assicuated to your MVP profile
+   *
+   * @example
+   * import { MVPActivitiesClient } from 'mvp-activities'
+   * const client = new MVPActivitiesClient() // creates the clients relying on `MVP_API_TOKEN` and `MVP_API_EMAIL` environment variables
+   * await client.init() // initializes the client
+   * const activities = await client.getSubmittedActivities() // fetches the activities submitted by the user
+   * console.log(activities)
+   */
   constructor(authToken, email) {
     this.authToken = authToken || process.env.MVP_API_TOKEN
     this.email = email || process.env.MVP_API_EMAIL
@@ -15,12 +38,27 @@ export class MVPActivitiesClient {
     }
   }
 
+  /**
+   * Initializes the client by fetching the user profile information.
+   * This method must be called before any other operation
+   *
+   * @returns {Promise<void>} - A promise that resolves when the client is initialized
+   */
   async init() {
-    this.userProfile = await this.getUserProfile()
+    this.userProfile = await this._getUserProfile()
     this.initialised = true
   }
 
-  async makeRequest(url, options, checkInit = true) {
+  /**
+   * Makes a raw request to the MVP Activities API. This method is to be considered private and shouldn't be used
+   * directly in your code unless you are trying to perform an operation that is not directly exposed by the client
+   *
+   * @private
+   * @param {string} url - The URL to call
+   * @param {object} options - The options for the request
+   * @param {boolean} [checkInit=true] - Whether to check if the client is initialized before making the request
+   */
+  async _makeRequest(url, options, checkInit = true) {
     if (checkInit && !this.initialised) {
       throw new Error('Client not initialized. Call init() first')
     }
@@ -52,8 +90,16 @@ export class MVPActivitiesClient {
     return response.json()
   }
 
-  getUserProfile() {
-    return this.makeRequest(
+  /**
+   * Fetches the user profile information.
+   * This method is to be considered private and shouldn't be used directly in your code.
+   * It is automcatically invoked on `init()` and the necessary information will be stored in `this.userProfile`
+   *
+   * @private
+   * @returns {Promise<object>} - A promise that resolves to the user profile information
+   */
+  _getUserProfile() {
+    return this._makeRequest(
       `https://mavenapi-prod.azurewebsites.net/api/UserStatus/${this.email}`,
       {
         body: null,
@@ -63,8 +109,41 @@ export class MVPActivitiesClient {
     )
   }
 
+  /**
+   * Submits an activity to the MVP Activities API
+   *
+   * @param {object} activity - The activity to submit
+   * @returns {Promise<object>} - A promise that resolves to the response from the API
+   * @example
+   * const activity = {
+   *   activityTypeName: 'Blog',
+   *   typeName: 'Blog',
+   *   date: '2023-05-08T23:00:00.000Z',
+   *   description: 'A blog post about something',
+   *   privateDescription: 'A blog post about something',
+   *   isPrivate: false,
+   *   targetAudience: [
+   *     'Developer',
+   *     'IT Pro',
+   *     'Technical Decision Maker',
+   *     'Student',
+   *   ],
+   *   tenant: 'MVP',
+   *   title: 'My blog post',
+   *   url: 'https://myblog.com/my-post',
+   *   reach: 2000,
+   *   quantity: 1,
+   *   role: 'Author',
+   *   technologyFocusArea: 'Web Development',
+   *   additionalTechnologyAreas: ['Developer Tools', 'DevOps'],
+   *   imageUrl: 'https://myblog.com/my-post.png',
+   * }
+   *
+   * const resp = await client.submitActivity(activity)
+   * console.log(resp)
+   */
   submitActivity(activity) {
-    return this.makeRequest(
+    return this._makeRequest(
       'https://mavenapi-prod.azurewebsites.net/api/Activities/',
       {
         method: 'POST',
@@ -79,8 +158,14 @@ export class MVPActivitiesClient {
     )
   }
 
+  /**
+   * Updates an activity in the MVP Activities API
+   *
+   * @param {object} activity - The activity to update
+   * @returns {Promise<object>} - A promise that resolves to the response from the API
+   */
   updateActivity(activity) {
-    return this.makeRequest(
+    return this._makeRequest(
       'https://mavenapi-prod.azurewebsites.net/api/Activities/',
       {
         method: 'PUT',
@@ -94,8 +179,14 @@ export class MVPActivitiesClient {
     )
   }
 
+  /**
+   * Marks an activity as high impact in the MVP Activities API
+   *
+   * @param {number} activityId - The id of the activity to mark as high impact
+   * @returns {Promise<object>} - A promise that resolves to the response from the API
+   */
   markAsHighImpact(activityId) {
-    return this.makeRequest(
+    return this._makeRequest(
       `https://mavenapi-prod.azurewebsites.net/api/Contributions/HighImpact/${activityId}`,
       {
         method: 'PUT',
@@ -106,8 +197,17 @@ export class MVPActivitiesClient {
     )
   }
 
+  /**
+   * Deletes an activity from the MVP Activities API
+   * NOTE: as of 2024-02-04 this method, although it might return successfully, it won't actually delete the activity.
+   * The same behaviour is present on the MVP website. If you delete an activity, it will look like it has been removed successfully,
+   * only to re-appear once you refresh the list.
+   *
+   * @param {number} activityId - The id of the activity to delete
+   * @returns {Promise<object>} - A promise that resolves to the response from the API
+   */
   deleteActivity(activityId) {
-    return this.makeRequest(
+    return this._makeRequest(
       `https://mavenapi-prod.azurewebsites.net/api/Activities/${activityId}`,
       {
         method: 'DELETE',
@@ -115,13 +215,18 @@ export class MVPActivitiesClient {
     )
   }
 
+  /**
+   * Fetches the activities submitted by the user
+   *
+   * @returns {Promise<object[]>} - A promise that resolves to an array of activities submitted by the user
+   */
   async getSubmittedActivities() {
     const submittedActivities = []
     const pageSize = 50
     let numPages = 1
     let currentPage = 1
     while (currentPage <= numPages) {
-      const data = await this.makeRequest(
+      const data = await this._makeRequest(
         'https://mavenapi-prod.azurewebsites.net/api/Contributions/CommunityLeaderActivities/search',
         {
           method: 'POST',
