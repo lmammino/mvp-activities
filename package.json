@@ -1,6 +1,6 @@
 {
   "name": "mvp-activities",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple client to interact with the Microsoft MVP activities API (not official)",
   "main": "src/client.js",
   "files": ["src/"],
