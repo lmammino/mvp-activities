@@ -2,6 +2,10 @@
 
 A simple client to interact with the Microsoft MVP activities API (not official).
 
+[![build](https://github.com/lmammino/mvp-activities/actions/workflows/build.yml/badge.svg)](https://github.com/lmammino/mvp-activities/actions/workflows/build.yml)
+[![npm](https://img.shields.io/npm/v/mvp-activities)](https://www.npmjs.com/package/mvp-activities)
+
+
 The main use case is to be used to automate the management (submissions, updates, etc.) of MVP activities.
 
 For some usage examples check the [`examples`](/examples) directory.
