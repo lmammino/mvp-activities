@@ -1,4 +1,4 @@
-import { MVPActivitiesClient } from '../src/client.js'
+import { MVPActivitiesClient } from 'mvp-activities'
 
 const client = new MVPActivitiesClient()
 await client.init()
@@ -15,7 +15,9 @@ const byDateAndTitle = activities.reduce((acc, activity) => {
 
 for (const [dateTitle, ids] of Object.entries(byDateAndTitle)) {
   if (ids.length > 1) {
-    console.log(`Found ${ids.length} duplicates for activities with the unique id '${dateTitle}'`)
+    console.log(
+      `Found ${ids.length} duplicates for activities with the unique id '${dateTitle}'`,
+    )
     for (const id of ids.slice(1)) {
       console.log(`Deleting ${id}`)
       console.log(await client.deleteActivity(id))

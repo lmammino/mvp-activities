@@ -1,11 +1,11 @@
-import { MVPActivitiesClient } from "../src/client.js";
+import { MVPActivitiesClient } from 'mvp-activities'
 
-const client = new MVPActivitiesClient();
+const client = new MVPActivitiesClient()
 
-await client.init();
+await client.init()
 
-const activities = await client.getSubmittedActivities();
+const activities = await client.getSubmittedActivities()
 
 for (const activity of activities) {
-  console.log(`${activity.date.substring(0, 10)} - ${activity.title}`);
+  console.log(`${activity.date.substring(0, 10)} - ${activity.title}`)
 }

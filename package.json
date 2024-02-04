@@ -1,16 +1,24 @@
 {
   "name": "mvp-activities",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A simple client to interact with the Microsoft MVP activities API (not official)",
   "main": "src/client.js",
+  "files": ["src/"],
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "test": "pnpm lint && pnpm format"
   },
-  "keywords": [],
+  "engines": {
+    "node": ">=20"
+  },
+  "engineStrict": true,
+  "keywords": ["mvp", "microsoft", "client", "api"],
   "author": "Luciano Mammino",
   "license": "MIT",
   "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
     "emoji-strip": "^1.0.1",
     "yaml": "^2.3.4",
     "youtubei.js": "^9.0.2"
