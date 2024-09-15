@@ -5,7 +5,7 @@ official).
 
 [![build](https://github.com/lmammino/mvp-activities/actions/workflows/build.yml/badge.svg)](https://github.com/lmammino/mvp-activities/actions/workflows/build.yml)
 [![npm](https://img.shields.io/npm/v/mvp-activities)](https://www.npmjs.com/package/mvp-activities)
-[![https://badgen.net/static/release-please/%F0%9F%99%8F/green](release-please)](https://github.com/googleapis/release-please)
+[![release-please](https://badgen.net/static/release-please/%F0%9F%99%8F/green)](https://github.com/googleapis/release-please)
 
 The main use case is to be used to automate the management (submissions,
 updates, etc.) of MVP activities.
